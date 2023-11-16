@@ -111,6 +111,10 @@ for i in range(10):
 
 
 # gui.mainloop()
-test = tuple("3 6")
-print((test))
-print(type(test))
+l = ['3!', '4', '5!', '55']
+
+for i, val in enumerate(l):
+    if '!' in val:
+        l[i] = f"math.factorial({val.replace('!', '')})"
+
+print(l)

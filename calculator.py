@@ -20,7 +20,7 @@ class Calculator:
                         '1' : '1', '2' : '2', '3' : '3', '-' : '-','+' : '+',
                         '0' : '0', '.' : '.', 'Exp' : 'E', 'Ans' : 'Ans', '=' : '='}
 
-        self.__labels_buttons_shift = {'SHIFT' : 'SHIFT', 'Rad' : 'Rad(', 'sin^-1' : 'sin^-1(', 'cos^-1' : 'cos^-1(', 'tan^-1' : 'tan^-1(', 
+        self.__labels_buttons_shift = {'SHIFT' : 'SHIFT', 'Rad' : 'Rad(', 'sin⁻¹' : 'sin⁻¹(', 'cos⁻¹' : 'cos⁻¹(', 'tan⁻¹' : 'tan⁻¹(', 
                         'x!' : '!', '∛' : '∛(', 'e^x' : 'e^(', 'x^3' : '^(3)', 'x^y' : '^(', 
                         'ln' : 'ln(', '10^y' : '10^(', 'hyp' : '', '(' : '(', ')' : ')', 
                         'mod' : 'mod', '+/-' : '', 'π' : 'π', '' : '', 'M+' : '', 
@@ -111,14 +111,15 @@ class Calculator:
                 term = ''
 
         operations_terms.append(term)
-
         functions_speciales = {'Rad' : 'math.radians', 'sin' : 'math.sin', 'cos' : 'math.cos', 'tan' : 'math.tan',
                             'ln' : 'math.log', 'log' : 'math.log10', '√' : 'math.sqrt', 'π' : 'math.pi', 'e' : 'math.e',
-                            'Rad' : 'math.radians', '∛' : 'math.cbrt', 'x' : '*', '^' : '**', 'Ans' : f'{self.__enregistre_resultat}', 'E' : '*10**'}
+                            'Rad' : 'math.radians', '∛' : 'math.cbrt', 'x' : '*', '^' : '**', 'Ans' : f'{self.__enregistre_resultat}', 
+                            'E' : '*10**', 'cos⁻¹':'math.acos', 'sin⁻¹':'math.asin', 'tan⁻¹':'math.atan'}
         
         print(f'val = {[val for val in operations_terms]}')
         print(f'operations_terms = {operations_terms}')
         operations_terms = [functions_speciales[func] if func in functions_speciales.keys() else func for func in operations_terms]
+        operations_terms = [f"math.factorial({val.replace('!', '')})" if '!' in val else val for val in operations_terms]
         print(f'operations_terms = {operations_terms}')
 
 
@@ -271,3 +272,4 @@ class Calculator:
 
 
 
+print(math.asin(-1))
