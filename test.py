@@ -32,89 +32,107 @@
 # print(a)
 # a = not a
 # print(a)
-import customtkinter as ctk
-from tkinter import *
-import math
-from datetime import datetime
-from PIL import Image, ImageTk
+# import customtkinter as ctk
+# from tkinter import *
+# import math
+# from datetime import datetime
+# from PIL import Image, ImageTk
 
-maintenant = datetime.now()
-# maintenant.
-jour, mois, annee = maintenant.day, maintenant.strftime('%B'), maintenant.year
-date = f"{jour}  {mois[:3]}.  {annee}"
+# maintenant = datetime.now()
+# # maintenant.
+# jour, mois, annee = maintenant.day, maintenant.strftime('%B'), maintenant.year
+# date = f"{jour}  {mois[:3]}.  {annee}"
 
-gui = ctk.CTk()
-gui.title("Historique des calculs".upper())
-gui.geometry("350x550")
-gui.resizable(width = False, height= False)
-# gui._set_appearance_mode('dark')
-label_frame = ctk.CTkScrollableFrame(gui, width = 350, height = 550, border_width = 0)
-label_frame.pack()
+# gui = ctk.CTk()
+# gui.title("Historique des calculs".upper())
+# gui.geometry("350x550")
+# gui.resizable(width = False, height= False)
+# # gui._set_appearance_mode('dark')
+# label_frame = ctk.CTkScrollableFrame(gui, width = 350, height = 550, border_width = 0)
+# label_frame.pack()
 
-resultat_block = []
-def showCalcul(id):
-    print(f'calcul = {resultat_block[id]}')
+# resultat_block = []
+# def showCalcul(id):
+#     print(f'calcul = {resultat_block[id]}')
 
-for i in range(10):
-    main_div = ctk.CTkFrame(label_frame, fg_color='white', border_color= 'white', corner_radius=0, width = 345, height = 105)
-    main_div.pack(anchor = 'center', pady = (3, 0))
-    main_div.pack_propagate(False)
-    # divCalcul._set_appearance_mode('dark')
+# for i in range(10):
+#     main_div = ctk.CTkFrame(label_frame, fg_color='white', border_color= 'white', corner_radius=0, width = 345, height = 105)
+#     main_div.pack(anchor = 'center', pady = (3, 0))
+#     main_div.pack_propagate(False)
+#     # divCalcul._set_appearance_mode('dark')
 
-    divCalcul = ctk.CTkFrame(main_div, fg_color='yellow', corner_radius=0, width = 327, height = 100)
-    divCalcul.pack(expand = 1, pady = (1, 1))
-    divCalcul.pack_propagate(False)
-
-
-    divScreen = ctk.CTkFrame(divCalcul, fg_color='red', corner_radius=0, width = 325, height = 75)
-    divScreen.pack(anchor = 'center')
-    divScreen.pack_propagate(False)
-
-    screen = ctk.CTkTextbox(divScreen, fg_color='gray', corner_radius=0, width = 345, height = 75, font = ('Times new roman', 18, 'bold'))
-    screen.pack(anchor = 'center')
-    divScreen.pack_propagate(False)
-    resultat_block.append((f'{i} x 10', i*10))
-    screen.insert('1.0', f'{i} x 10 \n\n')
-    # screen.insert('end', ' ')
-    screen.tag_config("droite", justify="right")
-    screen.insert("insert", f'{i*10}', "droite")
-
-    div = ctk.CTkFrame(divCalcul, width = 325, height = 30, corner_radius=0, fg_color='green')
-    div.pack_propagate(False)
-    div.pack()
-
-    divDate = ctk.CTkFrame(div, fg_color='blue', corner_radius=0, width = 120, height = 30)
-    divDate.pack(side = 'left')
-    divDate.pack_propagate(False)
-    label_date = ctk.CTkLabel(divDate, text = date, fg_color='blue', font = ('Times new roman', 15, 'bold'))
-    label_date.pack()
-
-    divAction = ctk.CTkFrame(div, fg_color='blue', corner_radius=0, width = 120, height = 30)
-    # divAction.pack_propagate(False)
-    divAction.pack(side = 'right')
-
-    image_delete = ctk.CTkImage(Image.open('Images/delete.png'), size = (20, 20))
-    image_modify = ctk.CTkImage(Image.open('Images/pencil.png'), size = (20, 20))
-
-    delete_button = ctk.CTkButton(divAction, fg_color='yellow', text = '', corner_radius=0, width = 30, height = 20, image= image_delete, command = lambda id = i: showCalcul(id))
-    delete_button.grid(row = 0, column = 0)
-
-    modify_button = ctk.CTkButton(divAction, fg_color='yellow', text= '', corner_radius=0, width = 30, height = 20, image= image_modify, command = lambda id = i: showCalcul(id))
-    modify_button.grid(row = 0, column = 1)
-
-    # label_delete = Label(divAction, width = 75, height = 20, text = '🗑')
-    # label_delete.grid(row = 0, column = 0)
-    # label_modify = Label(divAction, width = 75, height = 20, text = '✏')
-    # label_modify.grid(row = 0, column = 1)
-    # divDate = Button(div)
-    # button.grid()
+#     divCalcul = ctk.CTkFrame(main_div, fg_color='yellow', corner_radius=0, width = 327, height = 100)
+#     divCalcul.pack(expand = 1, pady = (1, 1))
+#     divCalcul.pack_propagate(False)
 
 
-# gui.mainloop()
-l = ['3!', '4', '5!', '55']
+#     divScreen = ctk.CTkFrame(divCalcul, fg_color='red', corner_radius=0, width = 325, height = 75)
+#     divScreen.pack(anchor = 'center')
+#     divScreen.pack_propagate(False)
 
-for i, val in enumerate(l):
-    if '!' in val:
-        l[i] = f"math.factorial({val.replace('!', '')})"
+#     screen = ctk.CTkTextbox(divScreen, fg_color='gray', corner_radius=0, width = 345, height = 75, font = ('Times new roman', 18, 'bold'))
+#     screen.pack(anchor = 'center')
+#     divScreen.pack_propagate(False)
+#     resultat_block.append((f'{i} x 10', i*10))
+#     screen.insert('1.0', f'{i} x 10 \n\n')
+#     # screen.insert('end', ' ')
+#     screen.tag_config("droite", justify="right")
+#     screen.insert("insert", f'{i*10}', "droite")
 
+#     div = ctk.CTkFrame(divCalcul, width = 325, height = 30, corner_radius=0, fg_color='green')
+#     div.pack_propagate(False)
+#     div.pack()
+
+#     divDate = ctk.CTkFrame(div, fg_color='blue', corner_radius=0, width = 120, height = 30)
+#     divDate.pack(side = 'left')
+#     divDate.pack_propagate(False)
+#     label_date = ctk.CTkLabel(divDate, text = date, fg_color='blue', font = ('Times new roman', 15, 'bold'))
+#     label_date.pack()
+
+#     divAction = ctk.CTkFrame(div, fg_color='blue', corner_radius=0, width = 120, height = 30)
+#     # divAction.pack_propagate(False)
+#     divAction.pack(side = 'right')
+
+#     image_delete = ctk.CTkImage(Image.open('Images/delete.png'), size = (20, 20))
+#     image_modify = ctk.CTkImage(Image.open('Images/pencil.png'), size = (20, 20))
+
+#     delete_button = ctk.CTkButton(divAction, fg_color='yellow', text = '', corner_radius=0, width = 30, height = 20, image= image_delete, command = lambda id = i: showCalcul(id))
+#     delete_button.grid(row = 0, column = 0)
+
+#     modify_button = ctk.CTkButton(divAction, fg_color='yellow', text= '', corner_radius=0, width = 30, height = 20, image= image_modify, command = lambda id = i: showCalcul(id))
+#     modify_button.grid(row = 0, column = 1)
+
+#     # label_delete = Label(divAction, width = 75, height = 20, text = '🗑')
+#     # label_delete.grid(row = 0, column = 0)
+#     # label_modify = Label(divAction, width = 75, height = 20, text = '✏')
+#     # label_modify.grid(row = 0, column = 1)
+#     # divDate = Button(div)
+#     # button.grid()
+
+
+# # gui.mainloop()
+# import tkinter as tk
+
+# def creer_fenetre_interne():
+#     # Création d'un cadre à l'intérieur de la fenêtre principale
+#     cadre_interne = tk.Frame(root)
+#     cadre_interne.pack()
+
+#     # Ajout de widgets à l'intérieur du cadre
+#     label = tk.Label(cadre_interne, text="Ceci est une fenêtre interne!")
+#     label.pack()
+
+# # Création de la fenêtre principale
+# root = tk.Tk()
+
+# # Ajout d'un bouton pour créer la fenêtre interne
+# bouton = tk.Button(root, text="Créer la fenêtre interne", command=creer_fenetre_interne)
+# bouton.pack()
+
+# # Lancement de la boucle principale
+# root.mainloop()
+
+
+l = [1, 2, 3, 4]
+l.pop(l.index(3))
 print(l)

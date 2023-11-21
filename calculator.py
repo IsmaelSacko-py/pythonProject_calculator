@@ -30,13 +30,11 @@ class Calculator:
                         '0' : '0', '.' : '.', 'e' : 'e', 'PreAns' : 'PreAns', 'History' : 'History'}
         
 
-        self.__history_calculator = CalculatorHistory()
-        self.__calculator_buttons = list()
 
         self.__enregistre_resultat = None
-        self.__press_touch_schift = False
-        self.__press_egal_touch = False
+        # self.test = 'Hello'
         # print(f'{len(labels_buttons)} - {len(labels_buttons_shift)}')
+        self.__history_calculator = CalculatorHistory(self, self.__gui)
 
         list_buttons = []
 
@@ -74,12 +72,15 @@ class Calculator:
         self.__divButtons.grid_propagate(False)
         self.__divButtons.grid(padx = (3, 0))
 
-        self.__create_calculator_touch()
+        self.create_calculator_touch()
 
+    
 
-    def __create_calculator_touch(self):
+    def create_calculator_touch(self):
         ligne, colonne = 0, 0
-
+        self.__calculator_buttons = list()
+        self.__press_touch_shift = False
+        self.__press_egal_touch = False
         for label_button in self.__labels_buttons:
             if colonne > 4:
                 ligne += 1
@@ -131,32 +132,34 @@ class Calculator:
         screen_value = screen_value.replace('mod', '%')
         return self.simple_calculate(screen_value)  
 
+    def affiche_resultat(self, Resultat):
+        self.__screenResultat.configure(state='normal')
+
+        self.__screenResultat.delete('1.0', 'end')
+        for i in range(2):
+            self.__screenResultat.insert('end', '\n')
+        self.__screenResultat.tag_config("droite", justify="right")
+        self.__screenResultat.insert("insert", f"{Resultat}", "droite")
+        self.__screenResultat.configure(state='disabled')
 
 
-        
+    # @__screenCalculator.setter
+    def screenCalculator(self, newValue):
+        self.__screenCalculator.insert("0", newValue)
 
     # i = 0
     def simple_calculate(self, screen_value):
         '''Permet de faire des calculs simples'''
-        global affiche_resultat
+        # global affiche_resultat
 
         print(f'screen_value = {screen_value}')
-        def affiche_resultat(Resultat):
-            self.__screenResultat.configure(state='normal')
-
-            self.__screenResultat.delete('1.0', 'end')
-            for i in range(2):
-                self.__screenResultat.insert('end', '\n')
-            self.__screenResultat.tag_config("droite", justify="right")
-            self.__screenResultat.insert("insert", f"{Resultat}", "droite")
-            self.__screenResultat.configure(state='disabled')
-
+        
         # if screen_value:
         try:
             Resultat = eval(screen_value)
         except:
             Resultat = ''
-            affiche_resultat(Resultat = Resultat)
+            self.affiche_resultat(Resultat = Resultat)
             # screenResultat.configure(state='normal')
             # screenResultat.delete('1.0', 'end')
             # screenResultat.configure(state='disabled')
@@ -164,16 +167,16 @@ class Calculator:
 
             print('return 0')
             return 0
-        if isinstance(Resultat, (float, int)) : affiche_resultat(Resultat = Resultat)
+        if isinstance(Resultat, (float, int)) : self.affiche_resultat(Resultat = Resultat)
         print('return 1')
         return 1
         
         # else:
-        #     if button_clicker == '=' : affiche_resultat(Resultat = "Saisie vide")
+        #     if button_clicker == '=' : self.affiche_resultat(Resultat = "Saisie vide")
 
     
     def showText(self, label_button:str):
-        global __enregistre_resultat, __press_egal_touch, __press_touch_schift, __calculator_buttons, colonne, ligne
+        global __enregistre_resultat, __press_egal_touch, __press_touch_shift, __calculator_buttons, colonne, ligne
         # print(label_button.isdigit())
 
 
@@ -212,15 +215,20 @@ class Calculator:
                 self.__verif_expression()
 
             case 'SHIFT':
-                self.__press_touch_schift = not self.__press_touch_schift
+                print("J'ai appuye sur shift")
+                self.__press_touch_shift = not self.__press_touch_shift
+                # print(f'valeur de __calculator_buttons = {self.__calculator_buttons}')
+                print(f' valeur de la touche shift = {self.__press_touch_shift}')
                 for button in self.__calculator_buttons:
+                    # print('remettre toutes les touches a zero')
                     button.configure(text = '')
                 # calculator_buttons = []
-                new_labels_buttons = self.__labels_buttons_shift if self.__press_touch_schift else self.__labels_buttons
+                new_labels_buttons = self.__labels_buttons_shift if self.__press_touch_shift else self.__labels_buttons
                 for button, label_button in zip(self.__calculator_buttons, new_labels_buttons.keys()):
                     # print(f'label button = {labels_buttons_shift[label_button]}')
+                    # print('creation des nouveaux labels')
                     button.configure(text = label_button, command = lambda label_button = label_button: self.showText(new_labels_buttons[label_button]))
-
+                # self.create_calculator_touch(new_labels_buttons)
             case 'Ans' :
                 if self.__press_egal_touch:
                     self.__screenCalculator.delete('0', 'end')
@@ -245,13 +253,16 @@ class Calculator:
                 if self.__screenCalculator.get():
                     if not verif_resultat:
                         print('Syntaxe erreur')
-                        affiche_resultat(Resultat='Erreur de syntaxe')
+                        self.affiche_resultat(Resultat='Erreur de syntaxe')
                 else:
-                    affiche_resultat(Resultat = 'Saisie vide')
+                    self.affiche_resultat(Resultat = 'Saisie vide')
                 # self.__verif_expression()  
             case 'History':
                 print('history')
-                self.__history_calculator.show_history_block()
+                self.__div.destroy()
+                self.__divCalculator.destroy()
+
+                self.__history_calculator.show_history_block(self.__gui)
             case _:
 
                 if self.__press_egal_touch:
