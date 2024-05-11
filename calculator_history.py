@@ -2,6 +2,7 @@ import customtkinter as ctk
 # from tkinter import *
 from datetime import datetime
 from PIL import Image
+import os
 # import pickle
 
 class CalculatorHistory:
@@ -20,18 +21,28 @@ class CalculatorHistory:
 
 
     def __show_history_calcul(self, id):
+        """Permet la modification d'un calcul  dans l'historique
+
+        Args:
+            id (int): L'indenfiant du calcul
+        """
         self.__quit_history()
-        calculs_effectued = self.__read_history_file()
+        calculs_effectued = self.read_history_file()
         calcul_effectued = calculs_effectued[id]
         self.__calculator.screenCalculator(calcul_effectued[0])
         self.__calculator.affiche_resultat(calcul_effectued[1])
     
     def __delete_calcul_in_calculator_history(self, id):
+        """Supprime un calcul de l'historiaue
+
+        Args:
+            id (int): identifiant du calcul 
+        """
         # pass
-        calculs_effectued = self.__read_history_file()
+        calculs_effectued = self.read_history_file()
         calculs_effectued.pop(id)
         # print(f'historique = {calculs_effectued}')
-        with open("calculator_history.txt", "w") as f:
+        with open(self.__calculator.fileName, "w") as f:
             for calcul in calculs_effectued:
                 f.write(f"{'#'.join(calcul)}\n")
         self.__historyDiv.destroy()
@@ -40,12 +51,13 @@ class CalculatorHistory:
 
 
     def __create_block_history(self, id, calcul : tuple):
+        """Crée chaque block de l'historique. Chaque block correspond à un calcul effectué.
 
-        # maintenant = datetime.now()
-        # # maintenant.
-        # jour, mois, annee = maintenant.second, maintenant.strftime('%B'), maintenant.year
-        # date = f"{jour}  {mois[:3]}.  {annee}"
-        # print(f'temps = {date}')
+        Args:
+            id (int): l'identifiant du calcul
+            calcul (tuple): les informations du calcul, (le calcul, Le resultat, La date)
+        """
+
         self.__main_div = ctk.CTkFrame(self.__label_frame, fg_color='white', border_color= 'white', corner_radius=0, width = 345, height = 105)
         self.__main_div.pack(anchor = 'center', pady = (3, 0))
         self.__main_div.pack_propagate(False)
@@ -97,38 +109,55 @@ class CalculatorHistory:
 
 
     def save_operation(self, calcul : tuple):
+        """Sauvegarde le calcul effectué dans un fichier texte
+
+        Args:
+            calcul (tuple): les informaions(expression et résultat) du calcul. 
+        """
         maintenant = datetime.now()
         # maintenant.
         jour, mois, annee = maintenant.day, maintenant.strftime('%B'), maintenant.year
         date = f"{jour} {mois[:3]}. {annee}"
-        with open('calculator_history.txt', 'a+', encoding='UTF-8') as f:
+        with open(self.__calculator.fileName, 'a+', encoding='UTF-8') as f:
             calcul = f"{calcul[0]}#{calcul[1]}#{date}\n"
             f.write(calcul)
 
     def __quit_history(self):
+        """Fermeture de la fenêtre d'historique"""
         self.__historyDiv.destroy()
 
         # self.__calculator.__calculator_buttons = list()
         self.__calculator.create_calculator_interface()
+
     
-    def __read_history_file(self):
-        with open('calculator_history.txt', 'r', encoding='UTF-8') as f:
+
+    
+    def read_history_file(self):      
+        """Lis le contenu de l'historique de calcul qui est un fichier .txt
+
+        Returns:
+            return: les differents calculs effectués suivant le calcul le plus récent
+        """     
+        with open(self.__calculator.fileName, 'r', encoding='UTF-8') as f:
             calculs_effectued = reversed(f.readlines())
+            # calculs_effectued = reversed(f.readlines())
+
+            """Segmente chaque ligne de l'historique. Ligne qui représente les informations liées à un calcul effectué.
+                C-a-d, (le calcul)#(Le resultat)#(La date)
+            """
             calculs_effectued = [(calcul.strip().split('#')) for calcul in calculs_effectued]
         return calculs_effectued
         
 
 
     def show_history_block(self, gui):
-        # app = ctk.CTkToplevel()
-        # app.title("scientific calculator by SACKO Ismael".upper())
+        """Crée l'interface de l'historique des claculs et 
+        les differents blocks représentant chaque calcul
 
-        # app.geometry("350x550")
-        # app.resizable(width = False, height= False)
-        # app.configure(bg = 'red')
-        # app._set_appearance_mode('dark')
+        Args:
+            gui (CTk): Fenêtre de l'application
+        """
         
-
         self.__historyDiv = ctk.CTkFrame(gui, corner_radius = 0)
         self.__historyDiv.pack(expand = 1)
 
@@ -147,25 +176,7 @@ class CalculatorHistory:
 
         self.__label_frame.pack(padx = 2, pady =0)
 
-        calculs_effectued = self.__read_history_file()
-            # calculs_effectued = [tuple(calcul) for calcul in calculs_effectued]
-            # print((calculs_effectued))
+        calculs_effectued = self.read_history_file()
+
         for id, calcul in enumerate(calculs_effectued):
             self.__create_block_history(id, calcul)
-            # print(f'{operation} - {type(operation)}')
-        # app.mainloop()
-
-
-
-
-# gui = ctk.CTk()
-# gui.title("scientific calculator by SACKO Ismael".upper())
-# gui.geometry("350x550")
-# gui.resizable(width = False, height= False)
-# gui.configure(bg = 'red')
-
-
-# calculator = CalculatorHistory()
-# calculator.show_history_block()
-
-# gui.mainloop()
