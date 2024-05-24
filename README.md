@@ -8,8 +8,8 @@ Elle permet d’effectuer des calculs simples mais aussi des calculs beaucoup pl
 
 ## Présentation de l'application
 
-<img align="left" width="31%" style="margin-right:2px;"  src="AppOverview/premiereFonction.png">
-<img align="left" width="31%" style="margin-right:2px;"  src="AppOverview/secondFonction.png">
+<img align="left" width="31%" src="AppOverview/premiereFonction.png">
+<img align="left" width="31%" src="AppOverview/secondFonction.png">
 <img align="left" width="31%"  src="AppOverview/historique.png">
 
 
