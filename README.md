@@ -1,4 +1,4 @@
-# Python Calculatriceoooooooo
+# Python Calculatrice
 
 <div style="text-align: justify;">
 C’est une application développée à l’aide de la bibliothèque d'interface utilisateur graphique <strong>CustomTkinter</strong> du langage de programmation Python.
@@ -8,8 +8,8 @@ Elle permet d’effectuer des calculs simples mais aussi des calculs beaucoup pl
 
 ## Présentation de l'application
 
-<img align="left" width="31%" src="AppOverview/premiereFonction.png">
-<img align="left" width="31%" src="AppOverview/secondFonction.png">
-<img align="left" width="31%"  src="AppOverview/historique.png">
+<img align="left" width="30%" src="AppOverview/premiereFonction.png">
+<img align="left" width="30%" src="AppOverview/secondFonction.png">
+<img align="left" width="30%"  src="AppOverview/historique.png">
 
 
